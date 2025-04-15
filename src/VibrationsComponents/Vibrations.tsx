@@ -31,7 +31,7 @@ const Vibrations: React.FC = () => {
 
     const categories: categoriesInterface = {
         sounds: [{ id: 'sound1', name: 'Bird', path: "/audio/sounds/bird.mp3", volume: 0.5, category: 'sounds' },
-          { id: 'sound2', name: 'Fire', path: "/audio/sounds/fire.mp3", volume: 0.5, category: 'sounds' },
+          // { id: 'sound2', name: 'Fire', path: "/audio/sounds/fire.mp3", volume: 0.5, category: 'sounds' },
           { id: 'sound3', name: 'Heartbeat', path: "/audio/sounds/heartbeat.mp3", volume: 0.5, category: 'sounds' },
           { id: 'sound4', name: 'Rain', path: "/audio/sounds/rain.mp3", volume: 0.5, category: 'sounds' },
           { id: 'sound5', name: 'Wind Chimes', path: "/audio/sounds/wind-chimes.mp3", volume: 0.5, category: 'sounds' }
