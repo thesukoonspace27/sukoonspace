@@ -11,8 +11,9 @@ module.exports = {
         'sukoon-green-light': '#90b0ae',
         'sukoon-green-dark': '#678486',
         'sukoon-warm-text': '#2F4F4F'
-      }
+      },
+      
   },
-  plugins: [],
+  plugins: [require('twglow')],
   }
 }
