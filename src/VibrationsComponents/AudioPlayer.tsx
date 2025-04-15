@@ -12,9 +12,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   updateVolume,
   removeAudioTrack,
 }) => {
-  useEffect(() => {
-    console.log("Current Category Tracks:", currentCategoryTracks);
-  }, [currentCategoryTracks]);
+
 
   return (
     <div className="space-y-4">

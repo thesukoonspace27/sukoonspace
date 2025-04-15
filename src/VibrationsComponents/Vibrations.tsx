@@ -53,7 +53,7 @@ const Vibrations: React.FC = () => {
 
   // Filter tracks by current category
   const currentCategoryTracks = getCurrentCategoryTracks();
-  useEffect(() => {console.log("Current Category Tracks:", currentCategoryTracks);}, [currentCategoryTracks]);
+  
     return (
       <div className="flex items-center justify-center  relative w-auto sm:w-[48rem] backdrop-blur-sm">
       <div className="bg-neutral-300 rounded-2xl drop-shadow-2xl w-full max-w-4xl  bg-opacity-20">
