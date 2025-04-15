@@ -130,7 +130,7 @@ const LandingPage = () => {
     const [playingMixId, setPlayingMixId] = useState(null); // State to track playing mix
 
     const handleFeatureClick = (feature) => {
-        console.log(`Navigating to ${feature}`);
+       
         if (feature === 'Vibrations') {
             navigate('/vibrations');
         }
@@ -140,7 +140,7 @@ const LandingPage = () => {
     const handlePlayPauseMix = (mixId) => {
         // NOTE: This only toggles the icon state. Actual audio playback is not implemented here.
         setPlayingMixId(currentPlayingId => (currentPlayingId === mixId ? null : mixId));
-        console.log(`Play/Pause toggled for mix: ${mixId}. Currently playing: ${playingMixId === mixId ? 'None' : mixId}`);
+        //console.log(`Play/Pause toggled for mix: ${mixId}. Currently playing: ${playingMixId === mixId ? 'None' : mixId}`);
         // Add actual audio play/pause logic here if feasible later
     };
 

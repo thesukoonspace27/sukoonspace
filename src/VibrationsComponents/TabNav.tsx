@@ -9,7 +9,7 @@ interface TabNavProps {
 const TabNav: React.FC<TabNavProps> = ({ activeTab, setActiveTab }) => {
     
     const {audioTracks} = useStore();
-    console.log("Audio Tracks:", audioTracks);
+   
     const tabs = [
         { name: "sounds", count: `${audioTracks.filter(track=> track.category === "sounds").length}/3` },
         { name: "music", count: `${audioTracks.filter(track=> track.category === "music").length}/3` },

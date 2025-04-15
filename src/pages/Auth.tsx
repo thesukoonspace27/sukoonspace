@@ -34,7 +34,7 @@ function AuthPage() {
         throw new Error(data || 'Authentication failed');
       }
   
-      console.log('Auth success:', data);
+      
     } catch (err: any) {
       console.error('Error:', err);
       setError(err.message || 'Something went wrong');
@@ -54,9 +54,9 @@ function AuthPage() {
 
       const data = await res.json();
       localStorage.setItem('token', data);
-      console.log('Google user authenticated:', data);
+     
     } catch (err) {
-      console.error('Google auth failed:', err);
+      
     }
   };
 
@@ -72,7 +72,7 @@ function AuthPage() {
               body: JSON.stringify({ accessToken }),
             });
           } else {
-            console.log('User cancelled Facebook login or did not fully authorize.');
+           
           }
         },
         { scope: 'public_profile,email' }
