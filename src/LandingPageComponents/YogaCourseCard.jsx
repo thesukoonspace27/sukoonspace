@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Card,
     CardMedia,
@@ -11,6 +12,7 @@ import {
 } from '@mui/material';
 
 const YogaCourseCard = ({ course }) => {
+    const navigate = useNavigate();
     return (
         <Card sx={{ 
             height: '100%',
@@ -61,7 +63,7 @@ const YogaCourseCard = ({ course }) => {
                     image={course.image}
                     alt={course.name}
                 />
-                <Button 
+                <Button onClick={() => navigate(`/course/${course.id}`)}
                     variant="contained"
                     sx={{ 
                         position: 'absolute',
