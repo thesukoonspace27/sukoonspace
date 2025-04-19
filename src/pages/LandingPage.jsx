@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; // Added useState
 import { useNavigate } from 'react-router-dom';
+import {courses} from '../AllCourses'
 // import FeatureCard from './FeatureCard'; // Removed as MUI Card is used directly
 import {
     ThemeProvider,
@@ -123,6 +124,10 @@ const pulseAnimation = keyframes`
   70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(168, 181, 162, 0); }
   100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(168, 181, 162, 0); }
 `;
+
+
+
+// Sample courses data (replace with actual data loading if needed)
 
 
 const LandingPage = () => {
@@ -295,38 +300,7 @@ const LandingPage = () => {
                             '&::-webkit-scrollbar-thumb': { backgroundColor: theme.palette.secondary.light, borderRadius: 4 },
                         }}
                     >
-                        {[
-                            {
-                                name: 'Morning Flow Yoga',
-                                image: 'static/img/bg.webp',
-                                instructor: 'Dimple Poptani',
-                                time: '6AM',
-                                duration: '2 weeks',
-                                classTime: '60 mins',
-                                price: '2999',
-                                tags: ['Trending', 'Beginner Friendly']
-                            },
-                            {
-                                name: 'Power Yoga',
-                                image: 'static/img/bg2.webp',
-                                instructor: 'Rahul Verma',
-                                time: '7AM',
-                                duration: '1 month',
-                                classTime: '75 mins',
-                                price: '3999',
-                                tags: ['Popular', 'Advanced']
-                            },
-                            {
-                                name: 'Yin Yoga',
-                                image: 'static/img/bg.webp',
-                                instructor: 'Ananya Patel',
-                                time: '5PM',
-                                duration: '1 week',
-                                classTime: '45 mins',
-                                price: '1999',
-                                tags: ['On a discount', 'Relaxing']
-                            }
-                        ].map((course, index) => (
+                        {courses.map((course, index) => (
                             <Box key={index} sx={{ minWidth: 300 }}>
                                 <YogaCourseCard course={course} />
                             </Box>
