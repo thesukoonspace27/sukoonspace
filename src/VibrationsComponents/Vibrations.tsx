@@ -36,10 +36,10 @@ const Vibrations: React.FC = () => {
           { id: 'sound4', name: 'Rain', path: "/audio/sounds/rain.mp3", volume: 0.5, category: 'sounds' },
           { id: 'sound5', name: 'Wind Chimes', path: "/audio/sounds/wind-chimes.mp3", volume: 0.5, category: 'sounds' }
         ],
-        music: [{ id: 'music1', name: 'Angelic', path: "/audio/music/music1.mp3", volume: 0.5, category: 'music' },
-          { id: 'music2', name: 'Conexion', path: "/audio/music/music1.mp3", volume: 0.5, category: 'music' },
-          { id: 'music3', name: 'Sernity', path: "/audio/music/music1.mp3", volume: 0.5, category: 'music' },
-          { id: 'music4', name: 'Tanpura', path: "/audio/music/music1.mp3", volume: 0.5, category: 'music' }
+        music: [{ id: 'music1', name: 'Angelic', path: "/audio/music/Angelic.mp3", volume: 0.5, category: 'music' },
+          { id: 'music2', name: 'Conexion', path: "/audio/music/conexion.mp3", volume: 0.5, category: 'music' },
+          { id: 'music3', name: 'Sernity', path: "/audio/music/serenity.mp3", volume: 0.5, category: 'music' },
+          { id: 'music4', name: 'Tanpura', path: "/audio/music/tanpura.mp3", volume: 0.5, category: 'music' }
         ],
         brainwaves: [{ id: 'brainwave1', name: 'Dreaming', path: "/audio/brainwaves/dreaming.mp3", volume: 0.5, category: 'brainwaves' }],
     };
