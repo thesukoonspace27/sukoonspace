@@ -23,12 +23,36 @@ export default function CourseDetails() {
       name: name,
       description: "Yoga Course Payment",
       handler: function (response) {
+        // Show toast
         toast({
           title: "Payment Successful!",
           description: `Payment ID: ${response.razorpay_payment_id}`,
           duration: 5000,
         });
-      },
+      
+        // Send data to backend
+        fetch("http://localhost:8080/api/enroll", { // Replace with your backend endpoint
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            paymentId: response.razorpay_payment_id,
+            courseId: course.id,
+            courseName: course.name,
+            price: course.price,
+            instructor: course.instructor,
+            userId: "loggedInUserIdGoesHere" // Ideally from auth context or local storage or send the token from loacal storage
+          }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Successfully enrolled:", data);
+        })
+        .catch((error) => {
+          console.error("Error enrolling in course:", error);
+        });
+      },      
       theme: {
         color: "#9b87f5",
       },
