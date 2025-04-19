@@ -124,6 +124,7 @@ const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
       ...audio,
       volume: audio.volume,
       category,
+      
     }));
 
     setAudioTracks((prev) => {
@@ -150,6 +151,8 @@ const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!audioRefs.current[track.id]) {
         audioRefs.current[track.id] = new Audio(track.path);
         audioRefs.current[track.id].volume = track.volume;
+        audioRefs.current[track.id].preload = "auto"; // Preload the audio file
+
         if (isPlaying) {
           audioRefs.current[track.id].play();
         }
@@ -176,6 +179,9 @@ const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
     audioRefs.current[audio.id] = new Audio(audio.path); // Initialize the audio element
     audioRefs.current[audio.id].volume = 0.5; // Set default volume
     audioRefs.current[audio.id].loop = true; // 🔁 Make it loop
+    audioRefs.current[audio.id].preload = "auto"; // Preload the audio
+
+
 
     if (isPlaying) {
       audioRefs.current[audio.id].play();
