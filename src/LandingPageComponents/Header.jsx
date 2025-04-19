@@ -25,7 +25,7 @@ const Header = ({ isHome }) => {
             setAuth(false); // Update state to reflect logout
             navigate('/signup'); // Redirect to signup page after logout
         } else {
-            // Redirect to signup page for login/signup
+            // Redirect to signup page for login/signu
             navigate('/signup');
         }
     };
