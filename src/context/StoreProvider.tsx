@@ -175,6 +175,8 @@ const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
     ]);
     audioRefs.current[audio.id] = new Audio(audio.path); // Initialize the audio element
     audioRefs.current[audio.id].volume = 0.5; // Set default volume
+    audioRefs.current[audio.id].loop = true; // 🔁 Make it loop
+
     if (isPlaying) {
       audioRefs.current[audio.id].play();
     }
