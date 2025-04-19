@@ -1,14 +1,34 @@
-import React, { useState, useEffect, use } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ isHome }) => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
     const [showHeader, setShowHeader] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [auth, setAuth] = useState(false);
+    const navigate = useNavigate(); // To handle redirection after logout
 
-    const token = localStorage.getItem('token');
-    const isLoggedIn = token !== null;
+    // Initialize auth state based on the token in localStorage
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setAuth(true); // User is authenticated
+        } else {
+            setAuth(false); // User is not authenticated
+        }
+    }, ); 
 
+    const handleAuth = () => {
+        if (auth) {
+            // Logout: Remove token from localStorage and navigate to signup page
+            localStorage.removeItem('token');
+            setAuth(false); // Update state to reflect logout
+            navigate('/signup'); // Redirect to signup page after logout
+        } else {
+            // Redirect to signup page for login/signup
+            navigate('/signup');
+        }
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -22,7 +42,6 @@ const Header = ({ isHome }) => {
         };
 
         window.addEventListener('scroll', handleScroll);
-
         return () => window.removeEventListener('scroll', handleScroll);
     }, [lastScrollY]);
 
@@ -34,9 +53,7 @@ const Header = ({ isHome }) => {
         >
             <div className="container mx-auto flex justify-between items-center">
                 <div>
-                    <Link to="/" className="hover:cursor-pointer">
-                        <h1 className="text-xl font-bold">The Sukoon Space</h1>
-                    </Link>
+                    <h1 className="text-xl font-bold">The Sukoon Space</h1>
                 </div>
                 <button
                     className="block md:hidden text-xl"
@@ -49,12 +66,12 @@ const Header = ({ isHome }) => {
                         isMenuOpen ? 'block' : 'hidden'
                     } md:flex space-x-4`}
                 >
-                    <Link to="/" className="hover:underline">
-                        Home
-                    </Link>
-                    <Link to="/signup" className="hover:underline">
-                        {isLoggedIn ? 'Logout' : 'Sign Up'}
-                    </Link>
+                    <button
+                        onClick={handleAuth}
+                        className="hover:underline"
+                    >
+                        {auth ? 'Logout' : 'Sign Up'}
+                    </button>
                 </nav>
             </div>
         </header>

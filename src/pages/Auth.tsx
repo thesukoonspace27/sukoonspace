@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Facebook, Mail, Lock, User2, X } from 'lucide-react';
 import clsx from 'clsx';
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
+
 
 type AuthMode = 'login' | 'signup';
 
 function AuthPage() {
+  const Navigate = useNavigate();
   const [authMode, setAuthMode] = useState<AuthMode>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +18,9 @@ function AuthPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    const url = authMode === 'signup' ? '/auth/signup' : '/auth/login'; // <-- update this
+  
+    const url = `http://localhost:8080${authMode === 'signup' ? '/auth/signup' : '/auth/login'}`;
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -27,14 +32,15 @@ function AuthPage() {
         ),
       });
   
-      const data = await response.text(); // or `.json()` if returning JSON
-      localStorage.setItem('token', data);
+      const data = await response.text(); // Adjust this to `.json()` if backend returns JSON
   
       if (!response.ok) {
         throw new Error(data || 'Authentication failed');
       }
   
-      
+      localStorage.setItem('token', data);
+      Navigate('/');
+  
     } catch (err: any) {
       console.error('Error:', err);
       setError(err.message || 'Something went wrong');
@@ -46,55 +52,77 @@ function AuthPage() {
 
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     try {
-      const res = await fetch('/api/auth/google', {
+      const res = await fetch('http://localhost:8080/auth/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: credentialResponse.credential }),
       });
-
+  
       const data = await res.json();
-      localStorage.setItem('token', data);
-     
-    } catch (err) {
-      
+  
+      if (!res.ok) {
+        throw new Error(data.message || 'Google authentication failed');
+      }
+  
+      localStorage.setItem('token', data.token);
+      Navigate('/');
+    } catch (err: any) {
+      setError(err.message || 'Failed to authenticate with Google');
+      console.error('Google auth error:', err);
     }
   };
+  
+//   const handleFBLogin = () => {
+//     if (window.FB) {
+//         window.FB.login(
+//             function (response) {
+//                 if (response.authResponse) {
+//                     const accessToken = response.authResponse.accessToken;
+//                     fetch('/auth/facebook', {
+//                         method: 'POST',
+//                         headers: { 'Content-Type': 'application/json' },
+//                         body: JSON.stringify({ accessToken }),
+//                     })
+//                     .then(res => res.json())
+//                     .then(data => {
+//                         if (data.token) {
+//                             localStorage.setItem('token', data.token);
+//                             // Redirect user to home page or update the UI as needed
+//                             navigate('/');
+//                         } else {
+//                             setError('Failed to authenticate with Facebook');
+//                         }
+//                     })
+//                     .catch(err => {
+//                         setError(err.message || 'Failed to authenticate with Facebook');
+//                         console.error('Facebook auth error:', err);
+//                     });
+//                 } else {
+//                     setError('Facebook login was cancelled or failed');
+//                 }
+//             },
+//             { scope: 'public_profile,email' }
+//         );
+//     } else {
+//         setError('Facebook SDK not loaded');
+//     }
+// };
 
-  const handleFBLogin = () => {
-    if (window.FB) {
-      window.FB.login(
-        function (response: any) {
-          if (response.authResponse) {
-            const accessToken = response.authResponse.accessToken;
-            fetch('/api/auth/facebook', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ accessToken }),
-            });
-          } else {
-           
-          }
-        },
-        { scope: 'public_profile,email' }
-      );
-    }
-  };
-
-  useEffect(() => {
-    // Load Facebook SDK script
-    const script = document.createElement('script');
-    script.src = 'https://connect.facebook.net/en_US/sdk.js';
-    script.async = true;
-    script.onload = () => {
-      window.FB.init({
-        appId: 'YOUR_FACEBOOK_APP_ID', // replace with your actual app ID
-        cookie: true,
-        xfbml: true,
-        version: 'v19.0',
-      });
-    };
-    document.body.appendChild(script);
-  }, []);
+// useEffect(() => {
+//     // Load Facebook SDK script
+//     const script = document.createElement('script');
+//     script.src = 'https://connect.facebook.net/en_US/sdk.js';
+//     script.async = true;
+//     script.onload = () => {
+//         window.FB.init({
+//             appId: import.meta.env.VITE_FACEBOOK_APP_ID, 
+//             cookie: true,
+//             xfbml: true,
+//             version: 'v19.0',
+//         });
+//     };
+//     document.body.appendChild(script);
+// }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
@@ -177,8 +205,8 @@ function AuthPage() {
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <div className="flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            <div className="mt-6 gap-3 flex items-center justify-center ">
+              <div className=" border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                 <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onError={() => console.log('Google Login Failed')}
@@ -186,7 +214,7 @@ function AuthPage() {
                 />
               </div>
 
-              <button
+              {/* <button 
                 onClick={handleFBLogin}
                 className={clsx(
                   "flex items-center justify-center px-4 py-2 rounded-lg transition-colors",
@@ -195,11 +223,11 @@ function AuthPage() {
               >
                 <Facebook size={20} className="mr-2" />
                 Facebook
-              </button>
+              </button> */}
             </div>
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center ">
             <button
               onClick={() => setAuthMode(authMode === 'login' ? 'signup' : 'login')}
               className="text-purple-600 hover:text-purple-700 font-medium"
