@@ -6,6 +6,8 @@ import Footer from './LandingPageComponents/Footer';
 import Auth from './pages/Auth';
 import VibrationsPage from './pages/VibrationsPage';
 import CourseDetails from './pages/CoursePayment';
+import YogaCoursesPage from './pages/YogaCoursesPage';
+
 
 function App() {
   const [showHeader, setShowHeader] = useState(true); // State to track header visibility
@@ -26,11 +28,12 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/vibrations" element={<VibrationsPage />} />
+            <Route path="/yoga-courses" element={<YogaCoursesPage />} />
             <Route path="/signup" element={<Auth />} />
             <Route path="/course/:courseId/" element={<CourseDetails />} />
           </Routes>
         </main>
-
+        
         <Footer />
       </div>
     </Router>

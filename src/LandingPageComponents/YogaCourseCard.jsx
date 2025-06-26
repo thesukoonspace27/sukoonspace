@@ -79,6 +79,7 @@ const YogaCourseCard = ({ course }) => {
                 </Button>
             </Box>
         </Card>
+        
     );
 };
 
