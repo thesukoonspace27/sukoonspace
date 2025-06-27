@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; // Added useState
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {courses} from '../AllCourses'
 // import FeatureCard from './FeatureCard'; // Removed as MUI Card is used directly
 import {
@@ -135,11 +135,21 @@ const LandingPage = () => {
     const [playingMixId, setPlayingMixId] = useState(null); // State to track playing mix
 
     const handleFeatureClick = (feature) => {
-       
+
+        // Add navigation for other features when ready
+        
         if (feature === 'Vibrations') {
             navigate('/vibrations');
         }
-        // Add navigation for other features when ready
+        if (feature === "Yoga") {
+          // navigate('/vibrations');
+          const yogaCoursesSection = document.getElementById(
+            "explore-yoga-courses"
+          );
+          if (yogaCoursesSection) {
+            yogaCoursesSection.scrollIntoView({ behavior: "smooth" });
+          }
+        }
     };
 
     const handlePlayPauseMix = (mixId) => {
@@ -166,8 +176,8 @@ const LandingPage = () => {
             title: 'Yoga',
             description: 'Book Yoga Sessions with top instructors.',
             icon: <SelfImprovementIcon fontSize="inherit" />,
-            onClick: () => {}, // No action yet
-            comingSoon: true,
+            onClick: () => handleFeatureClick('Yoga'), // No action yet
+            comingSoon: false,
         },
         {
             title: 'Tarot Card',
@@ -184,31 +194,51 @@ const LandingPage = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 {/* Hero Section */}
                 <Box
-                    sx={{
-                        height: '50vh', // Increased height
-                        width: '100%',
-                        backgroundImage: 'url(static/img/bg.webp)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        position: 'relative',
-                        '&::before': { // Overlay for text readability
-                            content: '""',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            backgroundColor: 'rgba(0, 0, 0, 0.4)', // Darker overlay
-                        },
+                sx={{
+                    height: '100vh',
+                    width: '100%',
+                    position: 'relative',
+                    overflow: 'hidden', // Prevent video overflow
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+                >
+                {/* Background Video Banner */}
+                <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    minWidth: '100%',
+                    minHeight: '100%',
+                    objectFit: 'cover',
+                    zIndex: 0,
                     }}
                 >
-                    <Typography variant="h1" sx={{ position: 'relative', zIndex: 1, fontWeight: 'bold' }}> {/* Added fontWeight */}
-                        Welcome to The Sukoon Space
-                    </Typography>
+                    <source src="/static/img/yoga.mp4" type="video/mp4" />
+                </video>
+
+                {/* Overlay */}
+                <Box
+                    sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay for text readability
+                    zIndex: 1,
+                    }}
+                />
+
+                
                 </Box>
+
 
                 {/* Features Section */}
                 <Container maxWidth="lg" sx={{ py: 6, mt: -10, position: 'relative', zIndex: 2 }}>
@@ -272,23 +302,25 @@ const LandingPage = () => {
                 </Container>
 
                 {/* Yoga Courses Section */}
-                <Container maxWidth="lg" sx={{ py: 4, mt: 2 }}>
+                <Container id="explore-yoga-courses" maxWidth="lg" sx={{ py: 4, mt: 2 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                         <Typography variant="h5" component="h2" sx={{ color: theme.palette.text.primary, fontWeight: 'bold' }}>
                             Explore Yoga Courses
                         </Typography>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                animation: `${pulseAnimation} 2s infinite`,
-                                backgroundColor: theme.palette.primary.main,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.primary.dark,
-                                }
-                            }}
-                        >
-                            Show All
-                        </Button>
+                        <Link to={'yoga-courses'} >
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    animation: `${pulseAnimation} 2s infinite`,
+                                    backgroundColor: theme.palette.primary.main,
+                                    '&:hover': {
+                                        backgroundColor: theme.palette.primary.dark,
+                                    }
+                                }}
+                            >
+                                Show All
+                            </Button>
+                        </Link>
                     </Box>
                     <Box
                         sx={{
@@ -302,7 +334,7 @@ const LandingPage = () => {
                     >
                         {courses.map((course, index) => (
                             <Box key={index} sx={{ minWidth: 300 }}>
-                                <YogaCourseCard course={course} />
+                                <YogaCourseCard course={course}  />
                             </Box>
                         ))}
                     </Box>
